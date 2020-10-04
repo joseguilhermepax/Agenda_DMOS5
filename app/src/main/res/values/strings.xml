@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">Agenda_DMOS5</string>
+    <string name="tag">AGENDA</string>
+    <string name="dados_contato">dados_contatos</string>
+    <string name="table_contatos">contatos</string>
+    <string name="column_nome">nome</string>
+    <string name="column_telefone">telefone</string>
+    <string name="column_celular">celular</string>
+    <string name="campo_nome">Nome do Contato</string>
+    <string name="campo_telefone">Telefone</string>
+    <string name="campo_celular">Celular</string>
+    <string name="salvar">Salvar</string>
+    <string name="erro_dados_vazios">Campos obrigatórios: Nome e Telefone ou Celular</string>
+    <string name="erro_contato_1">Contato inválido</string>
+    <string name="erro_contato_2">Ouve um erro ao cadastrar o contato</string>
+    <string name="nome">Nome</string>
+    <string name="telefone">Telefone:</string>
+    <string name="celular">Celular:</string>
+</resources>
