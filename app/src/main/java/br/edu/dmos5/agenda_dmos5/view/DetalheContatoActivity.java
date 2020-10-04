@@ -10,6 +10,7 @@ import android.widget.TextView;
 import br.edu.dmos5.agenda_dmos5.Constantes.Constantes;
 import br.edu.dmos5.agenda_dmos5.R;
 import br.edu.dmos5.agenda_dmos5.model.Contato;
+import br.edu.dmos5.agenda_dmos5.model.Usuario;
 
 public class DetalheContatoActivity extends AppCompatActivity {
 
@@ -38,14 +39,18 @@ public class DetalheContatoActivity extends AppCompatActivity {
 
     @Override
     public void finish() {
+
         super.finish();
     }
 
     private void exibirDados(){
 
-        telefoneTextView.setText(contato.getTelefone());
-        celularTextView.setText(contato.getCelular());
-        nomeTextView.setText(contato.getNome());
+        if(contato != null) {
+
+            nomeTextView.setText(contato.getNome());
+            telefoneTextView.setText(contato.getTelefone());
+            celularTextView.setText(contato.getCelular());
+        }
     }
 
     private void getArgumentos(){
@@ -60,7 +65,7 @@ public class DetalheContatoActivity extends AppCompatActivity {
             String celular  = argumentos.getString(Constantes.KEY_CELULAR);
             String nome     = argumentos.getString(Constantes.KEY_NOME);
 
-            contato = new Contato(nome, telefone, celular);
+            contato = new Contato(nome,telefone,celular, Usuario.getUserLogado());
         }
     }
 

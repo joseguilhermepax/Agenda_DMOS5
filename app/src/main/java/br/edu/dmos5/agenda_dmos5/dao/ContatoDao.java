@@ -5,12 +5,14 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.provider.BaseColumns;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import br.edu.dmos5.agenda_dmos5.Constantes.Constantes;
 import br.edu.dmos5.agenda_dmos5.model.Contato;
+import br.edu.dmos5.agenda_dmos5.model.Usuario;
 
 public class ContatoDao {
 
@@ -30,11 +32,15 @@ public class ContatoDao {
 
         ContentValues values = new ContentValues();
 
-        values.put(Constantes.COLUNA_NOME,     contato.getNome());
-        values.put(Constantes.COLUNA_TELEFONE, contato.getTelefone());
-        values.put(Constantes.COLUNA_CELULAR,  contato.getCelular());
+        values.put(Constantes.COLUNA_NOME,       contato.getNome());
+        values.put(Constantes.COLUNA_TELEFONE,   contato.getTelefone());
+        values.put(Constantes.COLUNA_CELULAR,    contato.getCelular());
+        values.put(Constantes.COLUNA_ID_USUARIO, Usuario.getUserLogado().getId());
 
-        dbObject.insert(Constantes.NOME_TABELA, null, values);
+        long teste = dbObject.insert(Constantes.NOME_TABELA, null, values);
+
+        Log.i("TAG Teste insert", String.valueOf(teste));
+
 
         dbObject.close();
     }
@@ -55,16 +61,19 @@ public class ContatoDao {
             BaseColumns._ID,
             Constantes.COLUNA_NOME,
             Constantes.COLUNA_TELEFONE,
-            Constantes.COLUNA_CELULAR
+            Constantes.COLUNA_CELULAR,
+            Constantes.COLUNA_ID_USUARIO,
         };
 
         String orderBy = Constantes.COLUNA_NOME + " ASC";
+        String where = Constantes.COLUNA_ID_USUARIO + " = ?";
+        String[] argumentos = {String.valueOf(Usuario.getUserLogado().getId())};
 
         cursor = db.query(
             Constantes.NOME_TABELA,
             colunas,
-            null,
-            null,
+            where,
+            argumentos,
             null,
             null,
             orderBy
@@ -76,8 +85,15 @@ public class ContatoDao {
                 cursor.getInt(0),
                 cursor.getString(1),
                 cursor.getString(2),
-                cursor.getString(3)
+                cursor.getString(3),
+                Usuario.getUserLogado()
             );
+
+            Log.i("Lista: Nome: ", contato.getNome());
+            Log.i("Lista: Telefone: ", contato.getTelefone());
+            Log.i("Lista: Celular: ", contato.getCelular());
+            Log.i("Lista: ID: ", Usuario.getUserLogado().toString());
+
 
             contatos.add(contato);
         }

@@ -21,8 +21,16 @@ public class SQLiteHelper extends SQLiteOpenHelper {
         + BaseColumns._ID + " INTEGER PRIMARY KEY,"
         + Constantes.COLUNA_NOME + " TEXT NOT NULL,"
         + Constantes.COLUNA_TELEFONE + " TEXT,"
-        + Constantes.COLUNA_CELULAR + " TEXT NOT NULL );";
+        + Constantes.COLUNA_CELULAR + " TEXT NOT NULL,"
+        + Constantes.COLUNA_ID_USUARIO + " INTEGER REFERENCES "+ Constantes.NOME_TABELA_USUARIO + "(_id) );";
 
+    public static final String ALTER_TABLE_CONTATO =
+        "ALTER TABLE " + Constantes.NOME_TABELA
+        + " ADD " + Constantes.COLUNA_ID_USUARIO + " INTEGER REFERENCES "
+        + Constantes.NOME_TABELA_USUARIO + "(_id);";
+
+    public static final String UPDATE_CONTATO_SETAR_USUARIO =
+        "UPDATE " + Constantes.NOME_TABELA + " SET " + Constantes.COLUNA_ID_USUARIO + " = 1;";
 
     public SQLiteHelper(@Nullable Context context) {
 
@@ -31,16 +39,26 @@ public class SQLiteHelper extends SQLiteOpenHelper {
     }
 
     public Context getContext(){
+
         return context;
     }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
+
         db.execSQL(CREATE_TABLE);
+        db.execSQL(UsuarioBDDao.CREATE_TABLE);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 
+        switch (oldVersion) {
+            case 1:
+                db.execSQL(UsuarioBDDao.CREATE_TABLE);
+                db.execSQL(UsuarioBDDao.INSERT_USER);
+                db.execSQL(ALTER_TABLE_CONTATO);
+                db.execSQL(UPDATE_CONTATO_SETAR_USUARIO);
+        }
     }
 }

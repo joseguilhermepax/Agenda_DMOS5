@@ -6,20 +6,31 @@ public class Contato {
 
     private Integer id;
     private String nome, telefone, celular;
+    private Usuario usuario;
 
-    public Contato(String nome, String telefone, String celular) {
+    public Contato(String nome, String telefone, String celular, Usuario usuario) {
 
         this.nome     = nome;
         this.telefone = telefone;
         this.celular  = celular;
+        this.usuario  = usuario;
     }
 
-    public Contato(Integer id, String nome, String telefone, String celular) {
+    public Contato(Integer id, String nome, String telefone, String celular, Usuario usuario) {
 
         this.id       = id;
         this.nome     = nome;
         this.telefone = telefone;
         this.celular  = celular;
+        this.usuario  = usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
+    }
+
+    public Usuario getUsuario() {
+        return usuario;
     }
 
     public Integer getId() {

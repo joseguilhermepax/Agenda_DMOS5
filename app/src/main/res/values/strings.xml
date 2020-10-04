@@ -13,7 +13,13 @@
     <string name="erro_dados_vazios">Campos obrigatórios: Nome e Telefone ou Celular</string>
     <string name="erro_contato_1">Contato inválido</string>
     <string name="erro_contato_2">Ouve um erro ao cadastrar o contato</string>
-    <string name="nome">Nome</string>
     <string name="telefone">Telefone:</string>
     <string name="celular">Celular:</string>
+    <string name="usuario">Usuario</string>
+    <string name="senha">Senha</string>
+    <string name="lembrar_acesso">Lembrar acesso</string>
+    <string name="login">Login</string>
+    <string name="nome">Nome</string>
+    <string name="novo_usu_rio">Novo usuário</string>
+    <string name="agenda_dmo">Agenda DMO</string>
 </resources>

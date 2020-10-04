@@ -5,7 +5,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -13,12 +15,15 @@ import android.widget.EditText;
 
 import com.google.android.material.snackbar.Snackbar;
 
+import br.edu.dmos5.agenda_dmos5.Constantes.Constantes;
 import br.edu.dmos5.agenda_dmos5.R;
 import br.edu.dmos5.agenda_dmos5.dao.ContatoDao;
 import br.edu.dmos5.agenda_dmos5.model.Contato;
+import br.edu.dmos5.agenda_dmos5.model.Usuario;
 
 public class NovoContatoActivity extends AppCompatActivity {
 
+    private ConstraintLayout constraintLayout;
     private EditText telefoneEditText;
     private EditText celularEditText;
     private EditText nomeEditText;
@@ -40,6 +45,8 @@ public class NovoContatoActivity extends AppCompatActivity {
         nomeEditText           = findViewById(R.id.edittext_nome);
 
         adicionarContatoButton.setOnClickListener(this::adicionarContato);
+
+        constraintLayout = findViewById(R.id.novo_contato);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
@@ -73,7 +80,7 @@ public class NovoContatoActivity extends AppCompatActivity {
             contatoDao = new ContatoDao(getApplicationContext());
 
             try {
-                contatoDao.add(new Contato(nome, telefone, celular));
+                contatoDao.add(new Contato(nome, telefone, celular, Usuario.getUserLogado()));
 
                 finalizar(true);
             }
@@ -89,7 +96,14 @@ public class NovoContatoActivity extends AppCompatActivity {
     private void finalizar(boolean resultado){
 
         if(resultado){
-            setResult(Activity.RESULT_OK);
+
+            Intent result = new Intent();
+
+            result.putExtra(Constantes.KEY_NOME,     nomeEditText.getText().toString());
+            result.putExtra(Constantes.KEY_TELEFONE, telefoneEditText.getText().toString());
+            result.putExtra(Constantes.KEY_CELULAR,  celularEditText.getText().toString());
+
+            setResult(Activity.RESULT_OK, result);
         }
         else{
             setResult(Activity.RESULT_CANCELED);
